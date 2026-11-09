@@ -104,16 +104,13 @@ const GOOGLE_MAPS_API_KEY = "AIzaSyDuoPArDuGsA-hJ-uFxQ9V9kvo-UxH8UPQ";   // 記�
 const CENTER = { lat: 25.1176, lng: 121.4626 };   // 關渡宮
 const RADIUS = 800;                               // 公尺
 
-/* 洋流友善店家：只放自己公開表態的店（擺洋流海報文宣、公開發文挺洋流）。
-   格式：{ name:"店名", type:"小吃", note:"表態來源", lat:25.1, lng:121.4 } */
-const FRIENDLY_SHOPS = [];
 
 /* ===== 分類 ===== */
 const CATS = [
   { id:"store", label:"便利商店",   color:"#1d6f86", search:{ type:"nearby", types:["convenience_store"] } },
   { id:"car",   label:"汽車停車場", color:"#5b4bb7", search:{ type:"nearby", types:["parking"] } },
   { id:"moto",  label:"機車停車",   color:"#2f8f4e", search:{ type:"text",   query:"機車停車場" } },
-  { id:"food",  label:"洋流友善美食", color:"#d9622f", search:{ type:"local" } },
+  { id:"food",  label:"附近美食",   color:"#d9622f", search:{ type:"popular", types:["restaurant","cafe","bakery","meal_takeaway"] } },
 ];
 
 document.getElementById("nav").href =
@@ -169,22 +166,28 @@ function renderChips(){
 async function fetchCat(c){
   if (cache[c.id]) return cache[c.id];
   let out = [];
-  if (c.search.type === "local"){
-    out = FRIENDLY_SHOPS.map(s=>({ name:s.name, addr:`${s.type||""}${s.note?"・"+s.note:""}`, pos:{lat:s.lat,lng:s.lng}, url:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(s.name) }));
-  } else {
+  {
     const fields = ["displayName","location","formattedAddress","googleMapsURI"];
     let res;
-    if (c.search.type === "nearby"){
+    if (c.search.type === "popular"){
+      res = await Place.searchNearby({ fields:[...fields,"rating","userRatingCount"], includedTypes:c.search.types, maxResultCount:20,
+        locationRestriction:{ center:CENTER, radius:RADIUS }, rankPreference: RankPref.POPULARITY, language:"zh-TW", region:"tw" });
+    } else if (c.search.type === "nearby"){
       res = await Place.searchNearby({ fields, includedPrimaryTypes:c.search.types, maxResultCount:20,
         locationRestriction:{ center:CENTER, radius:RADIUS }, rankPreference: RankPref.DISTANCE, language:"zh-TW", region:"tw" });
     } else {
       res = await Place.searchByText({ textQuery:c.search.query, fields, maxResultCount:20,
         locationBias:{ center:CENTER, radius:RADIUS }, language:"zh-TW", region:"tw" });
     }
-    out = (res.places||[]).map(p=>({ name:p.displayName, addr:p.formattedAddress, pos:{lat:p.location.lat(), lng:p.location.lng()}, url:p.googleMapsURI }));
+    out = (res.places||[]).map(p=>({ name:p.displayName, addr:p.formattedAddress, pos:{lat:p.location.lat(), lng:p.location.lng()}, url:p.googleMapsURI, rating:p.rating, n:p.userRatingCount }));
   }
   out.forEach(p=>p.d = distM(CENTER,p.pos));
-  out = out.filter(p=>p.d <= RADIUS*1.6).sort((a,b)=>a.d-b.d);
+  out = out.filter(p=>p.d <= RADIUS*1.6);
+  if (c.search.type === "popular"){
+    out = out.filter(p=>(p.n||0) >= 50).sort((a,b)=>(b.n||0)-(a.n||0));
+  } else {
+    out.sort((a,b)=>a.d-b.d);
+  }
   cache[c.id] = out;
   return out;
 }
@@ -207,18 +210,19 @@ async function show(c){
   if (items.length) map.fitBounds(bounds, 40);
   const list = $("list");
   if (!items.length){
-    list.innerHTML = c.id==="food"
-      ? `<div class="empty"><b>名單整理中</b>　這裡只會列出自己公開表態支持的店家，例如擺放洋流海報文宣、公開發文挺洋流的店。名單會陸續補上。</div>`
-      : `<div class="empty">附近沒有找到${esc(c.label)}，可以點下方導航用 Google 地圖查更大範圍。</div>`;
+    list.innerHTML = `<div class="empty">附近沒有找到${esc(c.label)}，可以點下方導航用 Google 地圖查更大範圍。</div>`;
     $("status").textContent = "";
     return;
   }
-  $("status").textContent = `關渡宮 ${RADIUS} 公尺內外共 ${items.length} 處，依距離排序。`;
+  $("status").textContent = c.search.type === "popular"
+    ? `關渡宮附近 ${items.length} 家人氣店，依 Google 評論數排序。`
+    : `關渡宮 ${RADIUS} 公尺內外共 ${items.length} 處，依距離排序。`;
   list.innerHTML = "";
   items.forEach(p=>{
     const b = document.createElement("button");
     b.className = "item"; b.type = "button";
-    b.innerHTML = `<div><b>${esc(p.name)}</b><span>${esc(p.addr)}</span></div><span class="dist">${p.d} m</span>`;
+    const star = p.rating ? `★ ${p.rating.toFixed(1)}（${p.n}）・` : "";
+    b.innerHTML = `<div><b>${esc(p.name)}</b><span>${star}${esc(p.addr)}</span></div><span class="dist">${p.d} m</span>`;
     b.onclick = ()=>{ map.panTo(p.pos); map.setZoom(18); openInfo(p, p.marker); $("map").scrollIntoView({behavior:"smooth",block:"center"}); };
     list.appendChild(b);
   });
