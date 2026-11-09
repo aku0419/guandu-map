@@ -40,9 +40,11 @@ section{display:flex;flex-direction:column;gap:12px}
 .time b{display:block;font-family:var(--mono);font-size:1.25rem;color:var(--sea)}
 .time span,.note{font-size:.82rem;color:var(--muted)}
 
-#map{width:100%;height:min(55vh,420px);border-radius:14px;border:1px solid var(--line);background:var(--sea-soft)}
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+#map{width:100%;height:min(58vh,440px);border-radius:14px;border:1px solid var(--line);background:var(--sea-soft);display:block}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem;padding:7px 14px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--orange);background:var(--orange-soft);color:var(--orange);font-weight:700}
+.maphint{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--muted)}
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
 .card.rec{border:2px solid var(--orange)}
@@ -81,12 +83,13 @@ footer{font-size:.78rem;color:var(--muted);border-top:1px solid var(--line);padd
   </section>
 
   <section>
-    <h2>終點位置</h2>
-    <div id="map" role="region" aria-label="關渡宮前河岸廣場地圖"></div>
-    <div class="legend"><span><i style="background:#d9622f"></i>終點 河岸廣場</span><span><i style="background:#e3002c"></i>捷運關渡站</span></div>
+    <h2>地圖查詢<small>點分類，地圖會切換顯示</small></h2>
+    <div class="chips" id="chips" role="group" aria-label="地圖分類"></div>
+    <iframe id="map" title="關渡宮前河岸廣場周邊地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    <div class="maphint"><span id="hint">終點：關渡宮前河岸廣場</span><a id="openapp" target="_blank" rel="noopener">用手機 Google 地圖開啟 →</a></div>
     <div class="btns">
-      <a class="btn" id="nav-transit" target="_blank" rel="noopener">大眾運輸導航</a>
-      <a class="btn ghost" id="nav-walk" target="_blank" rel="noopener">從關渡站步行導航</a>
+      <a class="btn" id="nav-transit" target="_blank" rel="noopener">導航到終點</a>
+      <a class="btn ghost" id="nav-walk" target="_blank" rel="noopener">從捷運關渡站走過去</a>
     </div>
   </section>
 
@@ -153,34 +156,53 @@ footer{font-size:.78rem;color:var(--muted);border-top:1px solid var(--line);padd
 </div>
 
 <script>
-const GOOGLE_MAPS_API_KEY = "AIzaSyDuoPArDuGsA-hJ-uFxQ9V9kvo-UxH8UPQ";
-const END   = { lat: 25.1171, lng: 121.4638 };   // 關渡宮前河岸廣場
-const METRO = { lat: 25.1255, lng: 121.4671 };   // 捷運關渡站
+/* 只用 Maps Embed API（Google 免費、不限次數）。導航與查詢按鈕會開對方手機的 Google 地圖，不用金鑰。 */
+const KEY = "AIzaSyDuoPArDuGsA-hJ-uFxQ9V9kvo-UxH8UPQ";
+const PLACE = "關渡宮 台北市北投區知行路360號";
+const CENTER = "25.1171,121.4638";   // 關渡宮前河岸廣場
+const E = "https://www.google.com/maps/embed/v1/";
+const enc = encodeURIComponent;
+const appSearch = q => "https://www.google.com/maps/search/?api=1&query=" + enc(q);
+const appDir = (o, mode) => "https://www.google.com/maps/dir/?api=1" + (o ? "&origin=" + enc(o) : "") + "&destination=" + enc(PLACE) + "&travelmode=" + mode;
 
-const DEST = encodeURIComponent("關渡宮 台北市北投區知行路360號");
-const gm = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
-document.getElementById("nav-transit").href = `https://www.google.com/maps/dir/?api=1&destination=${DEST}&travelmode=transit`;
-document.getElementById("nav-walk").href = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent("捷運關渡站")}&destination=${DEST}&travelmode=walking`;
-document.getElementById("park-car").href = gm("停車場 near 關渡宮");
-document.getElementById("park-moto").href = gm("機車停車場 near 關渡宮");
+const CATS = [
+  { label:"終點",       embed: `place?q=${enc(PLACE)}&zoom=16`,                                     app: appSearch(PLACE),            hint:"終點：關渡宮前河岸廣場" },
+  { label:"捷運步行路線", embed: `directions?origin=${enc("捷運關渡站")}&destination=${enc(PLACE)}&mode=walking`, app: appDir("捷運關渡站","walking"), hint:"關渡站 1 號出口步行約 15～20 分鐘" },
+  { label:"便利商店",    q:"便利商店" },
+  { label:"汽車停車場",  q:"停車場" },
+  { label:"機車停車",    q:"機車停車場" },
+  { label:"美食小吃",    q:"小吃 美食" },
+  { label:"加油站",      q:"加油站" },
+  { label:"公共廁所",    q:"公共廁所" },
+  { label:"公車站",      q:"公車站" },
+];
+CATS.forEach(c=>{ if(c.q){
+  c.embed = `search?q=${enc(c.q + " near 關渡宮")}&center=${CENTER}&zoom=16`;
+  c.app = appSearch(c.q + " near 關渡宮");
+  c.hint = `關渡宮附近的${c.label}`;
+}});
 
-/* 只載入地圖本身（不呼叫 Places 查詢，避免額外費用） */
-(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({ key: GOOGLE_MAPS_API_KEY, v: "weekly", language: "zh-TW", region: "TW" });
+const frame = document.getElementById("map");
+const chips = document.getElementById("chips");
+function pick(i){
+  const c = CATS[i];
+  frame.src = E + c.embed + "&key=" + KEY + "&language=zh-TW&region=TW";
+  document.getElementById("hint").textContent = c.hint;
+  document.getElementById("openapp").href = c.app;
+  [...chips.children].forEach((b,j)=>b.setAttribute("aria-pressed", j===i));
+}
+CATS.forEach((c,i)=>{
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip"; b.textContent = c.label;
+  b.onclick = ()=>pick(i);
+  chips.appendChild(b);
+});
+pick(0);
 
-(async ()=>{
-  try{
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-    const map = new Map(document.getElementById("map"), { center: END, zoom: 15, mapId: "DEMO_MAP_ID", gestureHandling: "greedy" });
-    const pin = (bg, glyph, scale) => new PinElement({ background: bg, borderColor: "#fff", glyphColor: "#fff", glyph, scale }).element;
-    new AdvancedMarkerElement({ map, position: END,   content: pin("#d9622f", "終", 1.4), title: "關渡宮前河岸廣場（終點）", zIndex: 2 });
-    new AdvancedMarkerElement({ map, position: METRO, content: pin("#e3002c", "捷", 1.1), title: "捷運關渡站" });
-    const b = new google.maps.LatLngBounds(); b.extend(END); b.extend(METRO);
-    map.fitBounds(b, 50);
-  }catch(e){
-    document.getElementById("map").innerHTML = '<p style="padding:16px">地圖暫時無法顯示，請直接使用下方導航按鈕。</p>';
-  }
-})();
+document.getElementById("nav-transit").href = appDir("", "transit");
+document.getElementById("nav-walk").href = appDir("捷運關渡站", "walking");
+document.getElementById("park-car").href = appSearch("停車場 near 關渡宮");
+document.getElementById("park-moto").href = appSearch("機車停車場 near 關渡宮");
 </script>
 </body>
 </html>
