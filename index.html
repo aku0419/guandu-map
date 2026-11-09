@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>關渡宮終點便利地圖</title>
-<meta name="description" content="台北大洋流士林北投場終點關渡宮：周邊便利商店、汽機車停車、洋流友善店家。支持者自製，非官方。">
+<meta name="description" content="台北大洋流士林北投場終點關渡宮前河岸廣場：周邊便利商店、汽機車停車、洋流友善店家。支持者自製，非官方。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
@@ -67,7 +67,7 @@ footer{font-size:.78rem;color:var(--muted);border-top:1px solid var(--line);padd
   <section class="ticket">
     <div class="ticket-top"><strong>台北大洋流 VOYAGE 07</strong><span>2026.11.15 SUN</span></div>
     <div class="ticket-body">
-      <h1>士林・北投場<br>終點 <em>關渡宮</em></h1>
+      <h1>士林・北投場<br>終點 <em>關渡宮前河岸廣場</em></h1>
       <div class="times">
         <div class="time"><b>17:30</b><span>洋流大車掃</span></div>
         <div class="time"><b>18:30</b><span>洋流市政開講</span></div>
@@ -82,7 +82,7 @@ footer{font-size:.78rem;color:var(--muted);border-top:1px solid var(--line);padd
     <div id="map" role="region" aria-label="關渡宮周邊地圖"></div>
     <p class="status" id="status">地圖載入中…</p>
     <div class="list" id="list"></div>
-    <a id="nav" target="_blank" rel="noopener">導航到關渡宮（Google 地圖）→</a>
+    <a id="nav" target="_blank" rel="noopener">導航到關渡宮前河岸廣場（Google 地圖）→</a>
   </section>
 
   <section style="display:flex;flex-direction:column;gap:10px">
@@ -114,7 +114,7 @@ const CATS = [
 ];
 
 document.getElementById("nav").href =
-  "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("關渡宮 台北市北投區知行路360號") + "&travelmode=transit";
+  "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("關渡宮前河岸廣場 台北市北投區知行路360號") + "&travelmode=transit";
 
 /* Google Maps 官方載入程式（dynamic library import） */
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({ key: GOOGLE_MAPS_API_KEY, v: "weekly", language: "zh-TW", region: "TW" });
@@ -144,7 +144,7 @@ async function init(){
   map = new window._M($("map"), { center: CENTER, zoom: 16, mapId: "DEMO_MAP_ID", clickableIcons:false, gestureHandling:"greedy" });
   info = new google.maps.InfoWindow();
   const endPin = new PinElement({ background:"#d9622f", borderColor:"#fff", glyphColor:"#fff", glyph:"終", scale:1.4 });
-  new AdvancedMarkerElement({ map, position: CENTER, content: endPin.element, title:"關渡宮（終點）", zIndex: 999 });
+  new AdvancedMarkerElement({ map, position: CENTER, content: endPin.element, title:"關渡宮前河岸廣場（終點）", zIndex: 999 });
   renderChips();
   $("status").textContent = "點上方分類，查看關渡宮附近的地點。";
 }
