@@ -64,7 +64,9 @@ a{color:inherit}
 
 /* ---------- deck ---------- */
 .deck{background:var(--cream);padding-block:34px 56px;display:flex;flex-direction:column;gap:38px}
-.sec{display:flex;flex-direction:column;gap:14px}
+.sec{display:flex;flex-direction:column;gap:14px;min-width:0}
+.col>*,.sec>*,.card>*{min-width:0}
+html,body{overflow-x:hidden}
 .sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;border-bottom:2.5px solid var(--ink);padding-bottom:8px}
 .sec-h h2{margin:0;font-size:1.45rem;font-weight:900;line-height:1.2}
 .sec-h .en{font-family:var(--en);font-size:.78rem;letter-spacing:.06em;color:var(--orange-deep);white-space:nowrap}
