@@ -4,159 +4,264 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>關渡宮終點便利地圖</title>
-<meta name="description" content="台北大洋流士林北投場終點關渡宮前河岸廣場：建議路線、捷運、公車、停車資訊。支持者自製，非官方。">
+<meta name="description" content="台北大洋流第 07 站士林北投場，終點關渡宮前河岸廣場：地圖、捷運、公車、停車、周邊便利商店與美食。支持者自製，非官方。">
+<meta name="theme-color" content="#e8642a">
+<meta property="og:title" content="第 07 站・關渡宮前河岸廣場 登船指南">
+<meta property="og:description" content="11/15（日）17:30 大車掃・18:30 市政開講｜捷運、公車、停車、周邊資訊一頁看完">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
+/* Layout: 登船證 hero on 洋流橘 → black ticker → cream "deck" cards with hard offset shadows, one column, phone first */
 :root{
-  --bg:#f6f8f8; --surface:#fff; --ink:#14262b; --muted:#5b6d72; --line:#d7e1e2;
-  --sea:#1d6f86; --sea-soft:#dcedf1; --orange:#d9622f; --orange-soft:#fbe6dc; --metro:#e3002c;
-  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --orange:#e8642a; --orange-deep:#c94f1a; --ink:#1f1d1b; --cream:#f4efe6; --paper:#fbf8f2;
+  --sea:#1e6e86; --sea-soft:#d6e9ee; --metro:#d7263d; --muted:#6c655d;
+  --zh:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --en:"Archivo Black","Noto Sans TC",Impact,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --b:2.5px solid var(--ink); --shadow:5px 5px 0 var(--ink);
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){:root{
-  --bg:#0e1a1d; --surface:#152428; --ink:#e6eeef; --muted:#93a6ab; --line:#26393e;
-  --sea:#5fb3c9; --sea-soft:#183840; --orange:#f08354; --orange-soft:#3a2219; --metro:#ff4d6a; color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;font-size:15px}
-.wrap{max-width:720px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 48px max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:26px}
-h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
-h2{font-size:1.15rem;font-weight:900;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
-h2 small{font-size:.78rem;font-weight:500;color:var(--muted)}
-h3{font-size:1rem;font-weight:700}
-p{margin:0} a{color:var(--sea)}
-section{display:flex;flex-direction:column;gap:12px}
-:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:6px}
+html{background:var(--orange)}
+body{margin:0;background:var(--orange);color:var(--ink);font-family:var(--zh);font-weight:500;line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:640px;margin:0 auto}
 
-.ticket{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.ticket-top{background:var(--orange);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.ticket-top span{font-family:var(--mono);font-size:.8rem;letter-spacing:.08em}
-.ticket-body{padding:16px;display:flex;flex-direction:column;gap:12px}
-.ticket h1{font-size:1.55rem;font-weight:900}
-.ticket h1 em{font-style:normal;color:var(--orange)}
-.times{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.time{border:1px dashed var(--line);border-radius:10px;padding:8px 12px}
-.time b{display:block;font-family:var(--mono);font-size:1.25rem;color:var(--sea)}
-.time span,.note{font-size:.82rem;color:var(--muted)}
+/* ---------- hero ---------- */
+.hero{padding-block:22px 34px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -40px -10%;height:120px;opacity:.16;pointer-events:none;
+  background:repeating-radial-gradient(ellipse at 50% 120%,transparent 0 14px,var(--ink) 14px 16px)}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.12em}
+.topline .pill{border:2px solid var(--ink);border-radius:999px;padding:3px 10px;background:var(--paper)}
+.eyebrow{margin:26px 0 6px;font-family:var(--en);font-size:clamp(2.6rem,13vw,4.4rem);line-height:.9;letter-spacing:-.01em;color:var(--paper);
+  -webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+.title{font-size:clamp(1.9rem,8.5vw,2.8rem);font-weight:900;line-height:1.15;margin:0;text-wrap:balance}
+.title span{display:inline-block;background:var(--ink);color:var(--orange);padding:0 .22em;transform:rotate(-1.2deg);margin-top:6px}
 
-#map{width:100%;height:min(58vh,440px);border-radius:14px;border:1px solid var(--line);background:var(--sea-soft);display:block}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
-.chip{flex:none;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem;padding:7px 14px;border-radius:999px;cursor:pointer}
-.chip[aria-pressed="true"]{border-color:var(--orange);background:var(--orange-soft);color:var(--orange);font-weight:700}
-.maphint{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--muted)}
+.pass{margin-top:24px;background:var(--paper);border:var(--b);border-radius:16px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;position:relative;z-index:1}
+.pass-main{padding:16px 16px 14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.pass-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--muted);font-weight:600}
+.pass-dest{font-size:1.35rem;font-weight:900;line-height:1.2}
+.pass-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pass-row b{display:block;font-family:var(--mono);font-size:1.45rem;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.pass-row span{font-size:.82rem}
+.stub{border-left:2.5px dashed var(--ink);padding:16px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--orange);border-radius:0 13px 13px 0;position:relative}
+.stub::before,.stub::after{content:"";position:absolute;left:-12px;width:20px;height:20px;border-radius:50%;background:var(--orange);border:var(--b)}
+.stub::before{top:-12px;clip-path:inset(50% 0 0 0)} .stub::after{bottom:-12px;clip-path:inset(0 0 50% 0)}
+.stub .no{font-family:var(--en);font-size:2.4rem;line-height:1;color:var(--paper);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.stub .d{font-family:var(--mono);font-size:.78rem;font-weight:600}
+.stub .w{font-size:.78rem;font-weight:700}
 
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
-.card.rec{border:2px solid var(--orange)}
-.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--orange-soft);color:var(--orange);width:fit-content}
-.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:4px}
-.lines{display:flex;flex-wrap:wrap;gap:6px}
-.line{font-family:var(--mono);font-size:.85rem;padding:2px 10px;border-radius:6px;border:1.5px solid var(--sea);color:var(--sea);font-weight:500}
-.row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
-.row:first-of-type{border-top:0;padding-top:0}
-.row div{min-width:0}
-.row span{display:block;font-size:.82rem;color:var(--muted)}
-.row .dist{font-family:var(--mono);font-size:.82rem;color:var(--sea);white-space:nowrap}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:10px;background:var(--sea);color:#fff;text-decoration:none;font-weight:700;font-size:.92rem}
-.btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.btn.ghost{background:var(--surface);color:var(--sea);border:1.5px solid var(--sea)}
-.warn{background:var(--orange-soft);border-radius:10px;padding:10px 14px;font-size:.88rem}
-.warn b{color:var(--orange)}
-.tips{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
-.tips li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.92rem}
-.tips li b{color:var(--orange)}
-footer{font-size:.78rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+/* ---------- ticker ---------- */
+.ticker{background:var(--ink);color:var(--paper);overflow:hidden;white-space:nowrap;border-block:2.5px solid var(--ink)}
+.ticker-track{display:inline-flex;gap:28px;padding:10px 0;animation:tick 26s linear infinite;font-family:var(--en);font-size:.95rem;letter-spacing:.04em}
+.ticker-track span{display:inline-flex;gap:28px;align-items:center}
+.ticker-track i{font-style:normal;color:var(--orange)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- deck ---------- */
+.deck{background:var(--cream);padding-block:34px 56px;display:flex;flex-direction:column;gap:38px}
+.sec{display:flex;flex-direction:column;gap:14px}
+.sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;border-bottom:2.5px solid var(--ink);padding-bottom:8px}
+.sec-h h2{margin:0;font-size:1.45rem;font-weight:900;line-height:1.2}
+.sec-h .en{font-family:var(--en);font-size:.78rem;letter-spacing:.06em;color:var(--orange-deep);white-space:nowrap}
+.card{background:var(--paper);border:var(--b);border-radius:14px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:10px}
+.card h3{margin:0;font-size:1.06rem;font-weight:900;line-height:1.35}
+.card p{margin:0}
+.note{font-size:.84rem;color:var(--muted)}
+
+/* map */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin:0 -2px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;font:inherit;font-weight:700;font-size:.9rem;padding:7px 14px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);color:var(--ink);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.tab:hover{transform:translate(-1px,-1px);box-shadow:2px 2px 0 var(--ink)}
+.tab[aria-pressed="true"]{background:var(--ink);color:var(--orange)}
+.mapcard{padding:0;overflow:hidden;gap:0}
+#map{display:block;width:100%;height:min(60vh,430px);border:0;border-bottom:var(--b);background:var(--sea-soft)}
+.mapbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;flex-wrap:wrap}
+.mapbar b{font-size:.95rem}
+.mapbar a{font-weight:700;font-size:.88rem;text-decoration:none;border-bottom:2px solid var(--orange)}
+
+.btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.btn{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:12px 14px;border:var(--b);border-radius:12px;text-decoration:none;font-weight:900;font-size:1rem;box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s;min-height:64px}
+.btn small{font-weight:500;font-size:.78rem}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn.o{background:var(--orange)} .btn.k{background:var(--ink);color:var(--paper)} .btn.p{background:var(--paper)}
+
+/* route */
+.rec{position:relative}
+.badge{position:absolute;top:-13px;right:14px;background:var(--orange);border:2px solid var(--ink);border-radius:999px;padding:1px 12px;font-weight:900;font-size:.8rem;transform:rotate(3deg)}
+.metro-head{display:flex;align-items:center;gap:10px}
+.mline{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--metro);color:#fff;font-family:var(--mono);font-weight:600;font-size:.85rem;border:2px solid var(--ink);flex:none}
+.steps{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;position:relative}
+.steps li{position:relative;padding:0 0 14px 34px}
+.steps li:last-child{padding-bottom:0}
+.steps li::before{content:counter(s);counter-increment:s;position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);font-family:var(--mono);font-size:.74rem;font-weight:600;display:grid;place-items:center}
+.steps li:not(:last-child)::after{content:"";position:absolute;left:10px;top:25px;bottom:2px;border-left:2px dashed var(--ink)}
+.steps{counter-reset:s}
+.steps li.end::before{content:"終";background:var(--orange);font-family:var(--zh);font-weight:900}
+
+/* bus */
+.buses{display:flex;flex-wrap:wrap;gap:8px}
+.bus{font-family:var(--mono);font-weight:600;font-size:.95rem;min-width:52px;text-align:center;padding:4px 10px;border:2px solid var(--ink);border-radius:8px;background:var(--sea-soft)}
+.bus.r{background:#fde2dc}
+.link{font-weight:700;font-size:.9rem;text-decoration:none;border-bottom:2px solid var(--orange);width:fit-content}
+
+/* parking */
+.alert{background:var(--ink);color:var(--paper);border-radius:14px;padding:14px 16px;font-size:.92rem;border:var(--b);box-shadow:var(--shadow)}
+.alert b{color:var(--orange)}
+.lots{display:flex;flex-direction:column}
+.lot{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:2px dashed #cfc6b8}
+.lot:first-child{border-top:0;padding-top:0}
+.lot:last-child{padding-bottom:0}
+.P{width:34px;height:34px;border-radius:8px;background:var(--sea);color:#fff;font-family:var(--en);display:grid;place-items:center;font-size:1.1rem;border:2px solid var(--ink)}
+.lot div{min-width:0}
+.lot b{display:block;line-height:1.35}
+.lot span{font-size:.8rem;color:var(--muted)}
+.dist{font-family:var(--mono);font-weight:600;font-size:.88rem;white-space:nowrap}
+
+/* rules */
+.rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rules li{background:var(--paper);border:var(--b);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:4px 4px 0 var(--ink)}
+.rules .n{font-family:var(--en);font-size:1.6rem;line-height:1;color:var(--orange)}
+.rules b{font-size:.98rem;line-height:1.35}
+.rules span{font-size:.84rem;color:var(--muted)}
+
+footer{background:var(--ink);color:#bdb4a8;font-size:.8rem;padding-block:22px calc(22px + env(safe-area-inset-bottom,0px))}
+footer b{color:var(--paper)}
+footer a{color:var(--orange)}
+
+@media (max-width:420px){.rules{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none}.btn,.tab{transition:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <section class="ticket" aria-label="活動資訊">
-    <div class="ticket-top"><strong>台北大洋流 VOYAGE 07</strong><span>2026.11.15 SUN</span></div>
-    <div class="ticket-body">
-      <h1>士林・北投場<br>終點 <em>關渡宮前河岸廣場</em></h1>
-      <div class="times">
-        <div class="time"><b>17:30</b><span>洋流大車掃</span></div>
-        <div class="time"><b>18:30</b><span>洋流市政開講</span></div>
+
+<header class="hero gut">
+  <div class="col">
+    <div class="topline"><span>TAIPEI CURRENT</span><span class="pill">支持者自製・非官方</span></div>
+    <div class="eyebrow" aria-hidden="true">VOYAGE 07</div>
+    <h1 class="title">士林北投艦隊<br><span>終點登船指南</span></h1>
+
+    <div class="pass" aria-label="活動資訊">
+      <div class="pass-main">
+        <div>
+          <div class="pass-label">DESTINATION 終點</div>
+          <div class="pass-dest">關渡宮前河岸廣場</div>
+        </div>
+        <div class="pass-row">
+          <div><b>17:30</b><span>洋流大車掃</span></div>
+          <div><b>18:30</b><span>洋流市政開講</span></div>
+        </div>
       </div>
-      <p class="note">支持者自製的便利頁，不是官方網站。路線、集合點與交通管制請以<a href="https://puma.taipei/taipei-current" target="_blank" rel="noopener">沈伯洋官網的台北大洋流頁面</a>為準。</p>
+      <div class="stub">
+        <span class="d">NOV</span>
+        <span class="no">15</span>
+        <span class="w">週日</span>
+      </div>
     </div>
-  </section>
+  </div>
+</header>
 
-  <section>
-    <h2>地圖查詢<small>點分類，地圖會切換顯示</small></h2>
-    <div class="chips" id="chips" role="group" aria-label="地圖分類"></div>
-    <iframe id="map" title="關渡宮前河岸廣場周邊地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-    <div class="maphint"><span id="hint">終點：關渡宮前河岸廣場</span><a id="openapp" target="_blank" rel="noopener">用手機 Google 地圖開啟 →</a></div>
-    <div class="btns">
-      <a class="btn" id="nav-transit" target="_blank" rel="noopener">導航到終點</a>
-      <a class="btn ghost" id="nav-walk" target="_blank" rel="noopener">從捷運關渡站走過去</a>
-    </div>
-  </section>
-
-  <section>
-    <h2>建議路線<small>當天人多，搭捷運最穩</small></h2>
-    <div class="card rec">
-      <span class="tag">推薦</span>
-      <h3>捷運關渡站 1 號出口，步行約 15～20 分鐘</h3>
-      <ol class="steps">
-        <li>搭淡水信義線（紅線）到<b>關渡站</b>，從 <b>1 號出口</b>出站。</li>
-        <li>右轉沿大度路三段 296 巷、301 巷往河邊走。</li>
-        <li>穿過大度路陸橋下的涵洞，接上<b>知行路</b>。</li>
-        <li>沿知行路走到關渡宮，終點就在廟前的河岸廣場。</li>
-      </ol>
-    </div>
-    <div class="card">
-      <h3>不想走路：捷運關渡站轉公車</h3>
-      <p>關渡站轉搭以下公車，到「<b>關渡宮</b>」站下車：</p>
-      <div class="lines"><span class="line">223</span><span class="line">302</span><span class="line">小23</span></div>
-      <p class="note">散場前後公車可能會塞，等不到車可以直接走回捷運站。</p>
-    </div>
-  </section>
-
-  <section>
-    <h2>公車資訊</h2>
-    <div class="card">
-      <h3>直達「關渡宮」站</h3>
-      <div class="lines"><span class="line">133</span><span class="line">216副</span><span class="line">223</span><span class="line">302</span><span class="line">550</span><span class="line">紅35</span><span class="line">小23</span></div>
-      <a href="https://pda5284.gov.taipei/MQS/stoplocation.jsp?slid=547" target="_blank" rel="noopener">查關渡宮站公車即時動態 →</a>
-    </div>
-    <div class="card">
-      <h3>到「關渡站」再步行</h3>
-      <div class="lines"><span class="line">223</span><span class="line">302</span><span class="line">838</span><span class="line">紅22</span><span class="line">紅55</span></div>
-      <p class="note">下車後過大度路，沿知行路步行約 10 分鐘。</p>
-    </div>
-  </section>
-
-  <section>
-    <h2>停車資訊<small>距離為與關渡宮的直線距離</small></h2>
-    <div class="warn"><b>當天車位一定不夠。</b>附近停車場不大，車掃結束後周邊道路也可能管制，能搭捷運就搭捷運。開車或騎車的話，建議停在關渡站一帶再走過來。</div>
-    <div class="card">
-      <div class="row"><div><b>關渡水岸自然公園平面停車場</b><span>24 小時計時收費</span></div><span class="dist">約 185 m</span></div>
-      <div class="row"><div><b>嘟嘟房關渡宮站停車場</b><span>知行路 173-183 號・約 39 格・24 小時</span></div><span class="dist">約 235 m</span></div>
-      <div class="row"><div><b>關渡醫院旁平面停車場</b><span>平面停車場</span></div><span class="dist">約 344 m</span></div>
-    </div>
-    <div class="btns">
-      <a class="btn ghost" id="park-car" target="_blank" rel="noopener">Google 地圖找停車場</a>
-      <a class="btn ghost" id="park-moto" target="_blank" rel="noopener">Google 地圖找機車停車</a>
-    </div>
-    <p class="note">收費與剩餘車位以現場為準。按鈕會開 Google 地圖查即時資料。</p>
-  </section>
-
-  <section>
-    <h2>到場提醒</h2>
-    <ul class="tips">
-      <li><b>請在定點等車隊，不要騎車跟車。</b>前幾場跟車造成交通安全問題，競總也提醒過。</li>
-      <li><b>走水路的朋友請自費搭船。</b>注意船上安全，不要免費招待他人搭船。</li>
-      <li><b>散場可以錯開時間。</b>關渡站會很擠，可以先在附近吃個東西再走。</li>
-      <li><b>垃圾帶走。</b>關渡宮是信仰場所，也請放低音量、尊重周邊住戶。</li>
-    </ul>
-  </section>
-
-  <footer>支持者自製，非沈伯洋競選總部官方頁面。交通資訊整理自關渡宮官網、台灣觀光資訊網與台北市公車動態系統，實際情況以現場為準。</footer>
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>關渡宮前河岸廣場 <i>→</i> 17:30 大車掃 <i>→</i> 18:30 市政開講 <i>→</i> 捷運關渡站 1 號出口 <i>→</i></span>
+    <span>關渡宮前河岸廣場 <i>→</i> 17:30 大車掃 <i>→</i> 18:30 市政開講 <i>→</i> 捷運關渡站 1 號出口 <i>→</i></span>
+  </div>
 </div>
 
+<main class="deck gut">
+  <div class="col" style="display:flex;flex-direction:column;gap:40px">
+
+    <section class="sec" aria-labelledby="h-map">
+      <div class="sec-h"><h2 id="h-map">航海圖</h2><span class="en">CHART</span></div>
+      <div class="tabs" id="tabs" role="group" aria-label="地圖顯示"></div>
+      <div class="card mapcard">
+        <iframe id="map" title="關渡宮前河岸廣場周邊地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <div class="mapbar"><b id="hint">終點：關渡宮前河岸廣場</b><a id="openapp" target="_blank" rel="noopener">在 Google 地圖 App 開啟 ↗</a></div>
+      </div>
+      <div class="btns">
+        <a class="btn o" id="nav-transit" target="_blank" rel="noopener">導航到終點<small>大眾運輸路線</small></a>
+        <a class="btn k" id="nav-walk" target="_blank" rel="noopener">從關渡站走過去<small>步行路線</small></a>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="h-route">
+      <div class="sec-h"><h2 id="h-route">建議航線</h2><span class="en">ROUTE</span></div>
+      <div class="card rec">
+        <span class="badge">最推薦</span>
+        <div class="metro-head"><span class="mline">R25</span><h3>捷運關渡站 1 號出口<br>步行約 15～20 分鐘</h3></div>
+        <ol class="steps">
+          <li>搭淡水信義線（紅線）到<b>關渡站</b>，從 <b>1 號出口</b>出站</li>
+          <li>右轉，沿大度路三段 <b>296 巷、301 巷</b>往河邊走</li>
+          <li>穿過大度路陸橋下的<b>涵洞</b>，接上知行路</li>
+          <li class="end">沿<b>知行路</b>走到關渡宮，廟前河岸廣場就是終點</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>不想走路？關渡站轉公車</h3>
+        <p>在關渡站轉搭以下公車，到「<b>關渡宮</b>」站下車：</p>
+        <div class="buses"><span class="bus">223</span><span class="bus">302</span><span class="bus">小23</span></div>
+        <p class="note">散場前後公車可能塞住，等不到車就直接走回捷運站比較快。</p>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="h-bus">
+      <div class="sec-h"><h2 id="h-bus">公車</h2><span class="en">BUS</span></div>
+      <div class="card">
+        <h3>直達「關渡宮」站</h3>
+        <div class="buses"><span class="bus">133</span><span class="bus">216副</span><span class="bus">223</span><span class="bus">302</span><span class="bus">550</span><span class="bus r">紅35</span><span class="bus">小23</span></div>
+        <a class="link" href="https://pda5284.gov.taipei/MQS/stoplocation.jsp?slid=547" target="_blank" rel="noopener">查關渡宮站即時到站 ↗</a>
+      </div>
+      <div class="card">
+        <h3>到「關渡站」再走過去</h3>
+        <div class="buses"><span class="bus">223</span><span class="bus">302</span><span class="bus">838</span><span class="bus r">紅22</span><span class="bus r">紅55</span></div>
+        <p class="note">下車後過大度路，沿知行路步行約 10 分鐘。</p>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="h-park">
+      <div class="sec-h"><h2 id="h-park">停泊區</h2><span class="en">PARKING</span></div>
+      <div class="alert"><b>當天車位一定不夠。</b>附近停車場都不大，車掃結束後周邊也可能交通管制。能搭捷運就搭捷運，開車或騎車建議停在關渡站一帶再走過來。</div>
+      <div class="card">
+        <div class="lots">
+          <div class="lot"><span class="P">P</span><div><b>關渡水岸自然公園平面停車場</b><span>24 小時計時收費</span></div><span class="dist">185 m</span></div>
+          <div class="lot"><span class="P">P</span><div><b>嘟嘟房關渡宮站</b><span>知行路 173-183 號・約 39 格・24 小時</span></div><span class="dist">235 m</span></div>
+          <div class="lot"><span class="P">P</span><div><b>關渡醫院旁平面停車場</b><span>平面停車場</span></div><span class="dist">344 m</span></div>
+        </div>
+        <p class="note">距離為與關渡宮的直線距離。收費與剩餘車位以現場為準。</p>
+      </div>
+      <div class="btns">
+        <a class="btn p" id="park-car" target="_blank" rel="noopener">找汽車停車場<small>開 Google 地圖</small></a>
+        <a class="btn p" id="park-moto" target="_blank" rel="noopener">找機車停車<small>開 Google 地圖</small></a>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="h-rule">
+      <div class="sec-h"><h2 id="h-rule">船員守則</h2><span class="en">CREW RULES</span></div>
+      <ul class="rules">
+        <li><span class="n">01</span><b>定點等車隊，不跟車</b><span>前幾場騎車跟車有安全疑慮，競總也呼籲過。</span></li>
+        <li><span class="n">02</span><b>走水路請自費搭船</b><span>注意船上安全，不要免費招待他人搭船。</span></li>
+        <li><span class="n">03</span><b>散場錯開時間</b><span>關渡站會很擠，先在附近吃點東西再走。</span></li>
+        <li><span class="n">04</span><b>垃圾帶走、音量放低</b><span>關渡宮是信仰場所，也尊重周邊住戶。</span></li>
+      </ul>
+    </section>
+
+  </div>
+</main>
+
+<footer class="gut">
+  <div class="col">
+    <p><b>支持者自製的便利頁，不是沈伯洋競選總部官方頁面。</b>路線、集合點與交通管制請以<a href="https://puma.taipei/taipei-current" target="_blank" rel="noopener">官網台北大洋流頁面</a>為準。交通資訊整理自關渡宮官網、台灣觀光資訊網與台北市公車動態系統。</p>
+  </div>
+</footer>
+
 <script>
-/* 只用 Maps Embed API（Google 免費、不限次數）。導航與查詢按鈕會開對方手機的 Google 地圖，不用金鑰。 */
+/* 只用 Maps Embed API（Google 免費、不限次數）。導航與查詢按鈕開的是對方手機的 Google 地圖，不用金鑰。 */
 const KEY = "AIzaSyDuoPArDuGsA-hJ-uFxQ9V9kvo-UxH8UPQ";
 const PLACE = "關渡宮 台北市北投區知行路360號";
 const CENTER = "25.1171,121.4638";   // 關渡宮前河岸廣場
@@ -166,8 +271,8 @@ const appSearch = q => "https://www.google.com/maps/search/?api=1&query=" + enc(
 const appDir = (o, mode) => "https://www.google.com/maps/dir/?api=1" + (o ? "&origin=" + enc(o) : "") + "&destination=" + enc(PLACE) + "&travelmode=" + mode;
 
 const CATS = [
-  { label:"終點",       embed: `place?q=${enc(PLACE)}&zoom=16`,                                     app: appSearch(PLACE),            hint:"終點：關渡宮前河岸廣場" },
-  { label:"捷運步行路線", embed: `directions?origin=${enc("捷運關渡站")}&destination=${enc(PLACE)}&mode=walking`, app: appDir("捷運關渡站","walking"), hint:"關渡站 1 號出口步行約 15～20 分鐘" },
+  { label:"終點",       embed:`place?q=${enc(PLACE)}&zoom=16`, app:appSearch(PLACE), hint:"終點：關渡宮前河岸廣場" },
+  { label:"捷運步行路線", embed:`directions?origin=${enc("捷運關渡站")}&destination=${enc(PLACE)}&mode=walking`, app:appDir("捷運關渡站","walking"), hint:"關渡站 1 號出口，步行約 15～20 分鐘" },
   { label:"便利商店",    q:"便利商店" },
   { label:"汽車停車場",  q:"停車場" },
   { label:"機車停車",    q:"機車停車場" },
@@ -183,19 +288,19 @@ CATS.forEach(c=>{ if(c.q){
 }});
 
 const frame = document.getElementById("map");
-const chips = document.getElementById("chips");
+const tabs = document.getElementById("tabs");
 function pick(i){
   const c = CATS[i];
   frame.src = E + c.embed + "&key=" + KEY + "&language=zh-TW&region=TW";
   document.getElementById("hint").textContent = c.hint;
   document.getElementById("openapp").href = c.app;
-  [...chips.children].forEach((b,j)=>b.setAttribute("aria-pressed", j===i));
+  [...tabs.children].forEach((b,j)=>b.setAttribute("aria-pressed", j===i));
 }
 CATS.forEach((c,i)=>{
   const b = document.createElement("button");
-  b.type = "button"; b.className = "chip"; b.textContent = c.label;
+  b.type = "button"; b.className = "tab"; b.textContent = c.label;
   b.onclick = ()=>pick(i);
-  chips.appendChild(b);
+  tabs.appendChild(b);
 });
 pick(0);
 
