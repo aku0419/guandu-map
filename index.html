@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>關渡宮終點便利地圖</title>
+<meta name="description" content="台北大洋流士林北投場終點關渡宮：周邊便利商店、汽機車停車、洋流友善店家。支持者自製，非官方。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#f6f8f8; --surface:#fff; --ink:#14262b; --muted:#5b6d72; --line:#d7e1e2;
+  --sea:#1d6f86; --sea-soft:#dcedf1; --orange:#d9622f; --orange-soft:#fbe6dc;
+  --c-store:#1d6f86; --c-car:#5b4bb7; --c-moto:#2f8f4e; --c-food:#d9622f;
+  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0e1a1d; --surface:#152428; --ink:#e6eeef; --muted:#93a6ab; --line:#26393e;
+  --sea:#5fb3c9; --sea-soft:#183840; --orange:#f08354; --orange-soft:#3a2219; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;font-size:15px}
+.wrap{max-width:720px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-left)) 48px;display:flex;flex-direction:column;gap:22px}
+h1,h2{margin:0;line-height:1.25;text-wrap:balance}
+h2{font-size:1.1rem;font-weight:900;display:flex;gap:10px;align-items:baseline}
+h2 small{font-size:.78rem;font-weight:500;color:var(--muted)}
+p{margin:0} a{color:var(--sea)}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:6px}
+
+.ticket{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.ticket-top{background:var(--orange);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ticket-top span{font-family:var(--mono);font-size:.8rem;letter-spacing:.08em}
+.ticket-body{padding:16px;display:flex;flex-direction:column;gap:12px}
+.ticket h1{font-size:1.6rem;font-weight:900}
+.ticket h1 em{font-style:normal;color:var(--orange)}
+.times{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.time{border:1px dashed var(--line);border-radius:10px;padding:8px 12px}
+.time b{display:block;font-family:var(--mono);font-size:1.25rem;color:var(--sea)}
+.time span,.note{font-size:.82rem;color:var(--muted)}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.9rem;padding:7px 14px;border-radius:999px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.chip i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.chip[aria-pressed="true"]{border-color:currentColor;font-weight:700}
+.chip small{font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+#map{width:100%;height:min(62vh,460px);border-radius:14px;border:1px solid var(--line);background:var(--sea-soft)}
+.status{font-size:.82rem;color:var(--muted)}
+
+.list{display:flex;flex-direction:column;gap:8px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.item:hover{border-color:var(--sea)}
+.item div{min-width:0}
+.item b{display:block}
+.item span{font-size:.8rem;color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .dist{font-family:var(--mono);font-size:.82rem;color:var(--sea);white-space:nowrap}
+.empty{border:1.5px dashed var(--orange);background:var(--orange-soft);border-radius:12px;padding:14px 16px;font-size:.88rem}
+.empty b{color:var(--orange)}
+.tips{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.tips li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.92rem}
+.tips li b{color:var(--orange)}
+footer{font-size:.78rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="ticket">
+    <div class="ticket-top"><strong>台北大洋流 VOYAGE 07</strong><span>2026.11.15 SUN</span></div>
+    <div class="ticket-body">
+      <h1>士林・北投場<br>終點 <em>關渡宮</em></h1>
+      <div class="times">
+        <div class="time"><b>17:30</b><span>洋流大車掃</span></div>
+        <div class="time"><b>18:30</b><span>洋流市政開講</span></div>
+      </div>
+      <p class="note">支持者自製的便利頁，不是官方網站。路線、集合點與交通管制請以<a href="https://puma.taipei/taipei-current" target="_blank" rel="noopener">沈伯洋官網的台北大洋流頁面</a>為準。</p>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:10px">
+    <h2>終點周邊地圖<small>點分類載入附近地點</small></h2>
+    <div class="chips" id="chips"></div>
+    <div id="map" role="region" aria-label="關渡宮周邊地圖"></div>
+    <p class="status" id="status">地圖載入中…</p>
+    <div class="list" id="list"></div>
+    <a id="nav" target="_blank" rel="noopener">導航到關渡宮（Google 地圖）→</a>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:10px">
+    <h2>到場提醒</h2>
+    <ul class="tips">
+      <li><b>搭捷運最快。</b>淡水信義線關渡站下車，步行到關渡宮約 1 公里多。散場時車站會很擠，可以錯開時間。</li>
+      <li><b>請在定點等車隊，不要騎車跟車。</b>前幾場跟車造成交通安全問題，競總也提醒過。</li>
+      <li><b>走水路的朋友請自費搭船。</b>注意船上安全，不要免費招待他人搭船。</li>
+      <li><b>垃圾帶走。</b>關渡宮是信仰場所，也請放低音量、尊重周邊住戶。</li>
+    </ul>
+  </section>
+
+  <footer>支持者自製，非沈伯洋競選總部官方頁面。周邊設施資料來自 Google 地圖，以現場為準。</footer>
+</div>
+
+<script>
+/* ===== 設定區 ===== */
+const GOOGLE_MAPS_API_KEY = "請填入你的金鑰";   // 記得在 Google Cloud 限制為只允許你的網域
+const CENTER = { lat: 25.1176, lng: 121.4626 };   // 關渡宮
+const RADIUS = 800;                               // 公尺
+
+/* 洋流友善店家：只放自己公開表態的店（擺洋流海報文宣、公開發文挺洋流）。
+   格式：{ name:"店名", type:"小吃", note:"表態來源", lat:25.1, lng:121.4 } */
+const FRIENDLY_SHOPS = [];
+
+/* ===== 分類 ===== */
+const CATS = [
+  { id:"store", label:"便利商店",   color:"#1d6f86", search:{ type:"nearby", types:["convenience_store"] } },
+  { id:"car",   label:"汽車停車場", color:"#5b4bb7", search:{ type:"nearby", types:["parking"] } },
+  { id:"moto",  label:"機車停車",   color:"#2f8f4e", search:{ type:"text",   query:"機車停車場" } },
+  { id:"food",  label:"洋流友善美食", color:"#d9622f", search:{ type:"local" } },
+];
+
+document.getElementById("nav").href =
+  "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent("關渡宮 台北市北投區知行路360號") + "&travelmode=transit";
+
+/* Google Maps 官方載入程式（dynamic library import） */
+(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({ key: GOOGLE_MAPS_API_KEY, v: "weekly", language: "zh-TW", region: "TW" });
+
+const $ = id => document.getElementById(id);
+const cache = {};      // 每個分類只查一次，省 API 費用
+let map, info, markers = [], current = null;
+let Place, AdvancedMarkerElement, PinElement, RankPref;
+
+function distM(a, b){
+  const R=6371000, t=x=>x*Math.PI/180;
+  const dLat=t(b.lat-a.lat), dLng=t(b.lng-a.lng);
+  const s=Math.sin(dLat/2)**2+Math.cos(t(a.lat))*Math.cos(t(b.lat))*Math.sin(dLng/2)**2;
+  return Math.round(2*R*Math.asin(Math.sqrt(s)));
+}
+function esc(s){ return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+async function init(){
+  try{
+    ({ Map: window._M } = await google.maps.importLibrary("maps"));
+    ({ AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker"));
+    ({ Place, SearchNearbyRankPreference: RankPref } = await google.maps.importLibrary("places"));
+  }catch(e){
+    $("status").textContent = "地圖載入失敗，請確認金鑰與網域限制設定。";
+    return;
+  }
+  map = new window._M($("map"), { center: CENTER, zoom: 16, mapId: "DEMO_MAP_ID", clickableIcons:false, gestureHandling:"greedy" });
+  info = new google.maps.InfoWindow();
+  const endPin = new PinElement({ background:"#d9622f", borderColor:"#fff", glyphColor:"#fff", glyph:"終", scale:1.4 });
+  new AdvancedMarkerElement({ map, position: CENTER, content: endPin.element, title:"關渡宮（終點）", zIndex: 999 });
+  renderChips();
+  $("status").textContent = "點上方分類，查看關渡宮附近的地點。";
+}
+
+function renderChips(){
+  const box = $("chips"); box.innerHTML = "";
+  CATS.forEach(c=>{
+    const b = document.createElement("button");
+    b.className = "chip"; b.type = "button";
+    b.setAttribute("aria-pressed", current===c.id);
+    b.style.color = current===c.id ? c.color : "";
+    const n = cache[c.id] ? `<small>${cache[c.id].length}</small>` : "";
+    b.innerHTML = `<i style="background:${c.color}"></i>${c.label}${n}`;
+    b.onclick = ()=>show(c);
+    box.appendChild(b);
+  });
+}
+
+async function fetchCat(c){
+  if (cache[c.id]) return cache[c.id];
+  let out = [];
+  if (c.search.type === "local"){
+    out = FRIENDLY_SHOPS.map(s=>({ name:s.name, addr:`${s.type||""}${s.note?"・"+s.note:""}`, pos:{lat:s.lat,lng:s.lng}, url:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(s.name) }));
+  } else {
+    const fields = ["displayName","location","formattedAddress","googleMapsURI"];
+    let res;
+    if (c.search.type === "nearby"){
+      res = await Place.searchNearby({ fields, includedPrimaryTypes:c.search.types, maxResultCount:20,
+        locationRestriction:{ center:CENTER, radius:RADIUS }, rankPreference: RankPref.DISTANCE, language:"zh-TW", region:"tw" });
+    } else {
+      res = await Place.searchByText({ textQuery:c.search.query, fields, maxResultCount:20,
+        locationBias:{ center:CENTER, radius:RADIUS }, language:"zh-TW", region:"tw" });
+    }
+    out = (res.places||[]).map(p=>({ name:p.displayName, addr:p.formattedAddress, pos:{lat:p.location.lat(), lng:p.location.lng()}, url:p.googleMapsURI }));
+  }
+  out.forEach(p=>p.d = distM(CENTER,p.pos));
+  out = out.filter(p=>p.d <= RADIUS*1.6).sort((a,b)=>a.d-b.d);
+  cache[c.id] = out;
+  return out;
+}
+
+async function show(c){
+  current = c.id; renderChips();
+  $("status").textContent = `查詢${c.label}中…`;
+  let items;
+  try{ items = await fetchCat(c); }
+  catch(e){ $("status").textContent = "查詢失敗，請稍後再試。"; return; }
+  renderChips();
+  markers.forEach(m=>m.map=null); markers = [];
+  const bounds = new google.maps.LatLngBounds(CENTER);
+  items.forEach(p=>{
+    const pin = new PinElement({ background:c.color, borderColor:"#fff", glyphColor:"#fff", scale:.9 });
+    const m = new AdvancedMarkerElement({ map, position:p.pos, content:pin.element, title:p.name });
+    m.addListener("click", ()=>openInfo(p, m));
+    p.marker = m; markers.push(m); bounds.extend(p.pos);
+  });
+  if (items.length) map.fitBounds(bounds, 40);
+  const list = $("list");
+  if (!items.length){
+    list.innerHTML = c.id==="food"
+      ? `<div class="empty"><b>名單整理中</b>　這裡只會列出自己公開表態支持的店家，例如擺放洋流海報文宣、公開發文挺洋流的店。名單會陸續補上。</div>`
+      : `<div class="empty">附近沒有找到${esc(c.label)}，可以點下方導航用 Google 地圖查更大範圍。</div>`;
+    $("status").textContent = "";
+    return;
+  }
+  $("status").textContent = `關渡宮 ${RADIUS} 公尺內外共 ${items.length} 處，依距離排序。`;
+  list.innerHTML = "";
+  items.forEach(p=>{
+    const b = document.createElement("button");
+    b.className = "item"; b.type = "button";
+    b.innerHTML = `<div><b>${esc(p.name)}</b><span>${esc(p.addr)}</span></div><span class="dist">${p.d} m</span>`;
+    b.onclick = ()=>{ map.panTo(p.pos); map.setZoom(18); openInfo(p, p.marker); $("map").scrollIntoView({behavior:"smooth",block:"center"}); };
+    list.appendChild(b);
+  });
+}
+
+function openInfo(p, m){
+  info.setContent(`<div style="font-family:var(--font);color:#14262b;max-width:220px"><b>${esc(p.name)}</b><br><span style="font-size:12px;color:#5b6d72">${esc(p.addr)}</span><br><a href="${esc(p.url)}" target="_blank" rel="noopener">在 Google 地圖開啟 →</a></div>`);
+  info.open({ map, anchor:m });
+}
+
+init();
+</script>
+</body>
+</html>
