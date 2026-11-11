@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>關渡宮終點便利地圖</title>
-<meta name="description" content="台北大洋流第 07 站士林北投場，終點關渡宮前河岸廣場：地圖、捷運、公車、停車、周邊便利商店與美食。支持者自製，非官方。">
+<meta name="description" content="台北大洋流士林北投場：11/15（日）19:30 關渡宮前河岸廣場市政開講。車掃路線、交通管制、捷運、公車、接駁資訊。支持者自製，非官方。">
 <meta name="theme-color" content="#e8642a">
 <meta property="og:title" content="台北大洋流 VOYAGE 07・士林北投場 小水滴到場指南">
-<meta property="og:description" content="11/15（日）時間待官方公布｜捷運、公車、停車、周邊資訊一頁看完">
+<meta property="og:description" content="11/15（日）17:00 進場・17:00–19:30 洋流車掃・19:30–22:00 市政開講｜交通管制、捷運、公車、接駁一頁看完">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600&display=swap">
@@ -50,6 +50,30 @@ a{color:inherit}
 .pass-row span{font-size:.82rem}
 .pass-row b.tbd{font-family:var(--zh);font-weight:900;font-size:1.3rem;color:var(--orange-deep)}
 .pass-note{margin:0;font-size:.78rem;color:var(--muted)}
+.sched{display:flex;flex-direction:column;gap:0}
+.sched div{display:flex;align-items:baseline;gap:12px;padding:7px 0;border-top:1.5px dashed #cfc6b8}
+.sched div:first-child{border-top:0;padding-top:0}
+.sched b{font-family:var(--mono);font-weight:600;font-size:1.08rem;white-space:nowrap;font-variant-numeric:tabular-nums;min-width:6.6em}
+.sched span{font-size:.88rem;font-weight:700}
+.sched .hl b{color:var(--orange-deep)}
+.cruise{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;counter-reset:c}
+.cruise li{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:2px dashed #cfc6b8}
+.cruise li:first-child{border-top:0;padding-top:0}
+.cruise li:last-child{padding-bottom:0}
+.cruise .k{width:34px;height:34px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:.85rem;background:var(--paper)}
+.cruise li.go .k{background:var(--ink);color:var(--orange)}
+.cruise li.end .k{background:var(--orange);font-family:var(--zh);font-weight:900}
+.cruise div{min-width:0}
+.cruise b{display:block;line-height:1.35}
+.cruise span{font-size:.8rem;color:var(--muted)}
+.cruise a{font-weight:700;font-size:.82rem;text-decoration:none;border-bottom:2px solid var(--orange);white-space:nowrap}
+.cruise .t{font-family:var(--mono);font-weight:600;font-size:.85rem;white-space:nowrap}
+.closure{background:var(--ink);color:var(--paper);border:var(--b);border-radius:14px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:8px}
+.closure .when{font-family:var(--mono);font-weight:600;font-size:1.35rem;color:var(--orange)}
+.closure .where{font-size:1.02rem;font-weight:900;line-height:1.45}
+.closure p{margin:0;font-size:.88rem;color:#d9d1c6}
+.shuttle{background:var(--orange);}
+.shuttle .note{color:var(--ink)}
 .stub{border-left:2.5px dashed var(--ink);padding:16px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--orange);border-radius:0 13px 13px 0;position:relative}
 .stub::before,.stub::after{content:"";position:absolute;left:-12px;width:20px;height:20px;border-radius:50%;background:var(--orange);border:var(--b)}
 .stub::before{top:-12px;clip-path:inset(50% 0 0 0)} .stub::after{bottom:-12px;clip-path:inset(0 0 50% 0)}
@@ -157,11 +181,12 @@ footer a{color:var(--orange)}
           <div class="pass-label">DESTINATION 終點</div>
           <div class="pass-dest">關渡宮前河岸廣場</div>
         </div>
-        <div class="pass-row">
-          <div><b class="tbd">待公布</b><span>洋流大車掃</span></div>
-          <div><b class="tbd">待公布</b><span>洋流市政開講</span></div>
+        <div class="sched">
+          <div><b>17:00</b><span>開放進場・車隊出發</span></div>
+          <div><b>17:00–19:30</b><span>洋流車掃</span></div>
+          <div class="hl"><b>19:30–22:00</b><span>市政開講</span></div>
         </div>
-        <p class="pass-note">實際時間請以官方公布為準</p>
+        <p class="pass-note">全程於沈伯洋 Puma YouTube 頻道直播</p>
       </div>
       <div class="stub">
         <span class="d">NOV</span>
@@ -174,8 +199,8 @@ footer a{color:var(--orange)}
 
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <span>關渡宮前河岸廣場 <i>→</i> 11/15 週日 <i>→</i> 車掃與開講時間待官方公布 <i>→</i> 捷運關渡站 1 號出口 <i>→</i></span>
-    <span>關渡宮前河岸廣場 <i>→</i> 11/15 週日 <i>→</i> 車掃與開講時間待官方公布 <i>→</i> 捷運關渡站 1 號出口 <i>→</i></span>
+    <span>17:00 開放進場 <i>→</i> 17:00 洋流車掃出發 <i>→</i> 19:30 市政開講 <i>→</i> 關渡宮前河岸廣場 <i>→</i> 搭捷運到關渡站 1 號出口 <i>→</i></span>
+    <span>17:00 開放進場 <i>→</i> 17:00 洋流車掃出發 <i>→</i> 19:30 市政開講 <i>→</i> 關渡宮前河岸廣場 <i>→</i> 搭捷運到關渡站 1 號出口 <i>→</i></span>
   </div>
 </div>
 
@@ -195,11 +220,29 @@ footer a{color:var(--orange)}
       </div>
     </section>
 
+    <section class="sec" aria-labelledby="h-cruise">
+      <div class="sec-h"><h2 id="h-cruise">洋流車掃路線</h2><span class="en">CRUISE</span></div>
+      <div class="card">
+        <h3>7 個加油點，17:00 出發，19:30 抵達</h3>
+        <ol class="cruise">
+          <li class="go"><span class="k">01</span><div><b>陳慈慧加油點</b><span>延平北路六段 56 號</span></div><a href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A3%AB%E6%9E%97%E5%8D%80%E5%BB%B6%E5%B9%B3%E5%8C%97%E8%B7%AF%E5%85%AD%E6%AE%B556%E8%99%9F" target="_blank" rel="noopener">17:00 出發 ↗</a></li>
+          <li class=""><span class="k">02</span><div><b>鍾佩玲加油點</b><span>重慶北路四段 186 號</span></div><a href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A3%AB%E6%9E%97%E5%8D%80%E9%87%8D%E6%85%B6%E5%8C%97%E8%B7%AF%E5%9B%9B%E6%AE%B5186%E8%99%9F" target="_blank" rel="noopener">地圖 ↗</a></li>
+          <li class=""><span class="k">03</span><div><b>林延鳳加油點</b><span>福國路 67 號</span></div><a href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A3%AB%E6%9E%97%E5%8D%80%E7%A6%8F%E5%9C%8B%E8%B7%AF67%E8%99%9F" target="_blank" rel="noopener">地圖 ↗</a></li>
+          <li class=""><span class="k">04</span><div><b>民進黨台北市黨部加油點</b><span>忠誠公園－中山北路六段</span></div><a href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A3%AB%E6%9E%97%E5%8D%80%E5%BF%A0%E8%AA%A0%E5%85%AC%E5%9C%92" target="_blank" rel="noopener">地圖 ↗</a></li>
+          <li class=""><span class="k">05</span><div><b>陳賢蔚加油點</b><span>東華街一段 402 號</span></div><a href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%8C%97%E6%8A%95%E5%8D%80%E6%9D%B1%E8%8F%AF%E8%A1%97%E4%B8%80%E6%AE%B5402%E8%99%9F" target="_blank" rel="noopener">地圖 ↗</a></li>
+          <li class=""><span class="k">06</span><div><b>林世宗加油點</b><span>文林北路 290 號</span></div><a href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%8C%97%E6%8A%95%E5%8D%80%E6%96%87%E6%9E%97%E5%8C%97%E8%B7%AF290%E8%99%9F" target="_blank" rel="noopener">地圖 ↗</a></li>
+          <li class=""><span class="k">07</span><div><b>立法委員吳思瑤服務處加油點</b><span>承德路七段 196 號</span></div><a href="https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%B8%82%E5%8C%97%E6%8A%95%E5%8D%80%E6%89%BF%E5%BE%B7%E8%B7%AF%E4%B8%83%E6%AE%B5196%E8%99%9F" target="_blank" rel="noopener">地圖 ↗</a></li>
+          <li class="end"><span class="k">終</span><div><b>關渡宮前河岸廣場</b><span>經中央北路、知行路抵達</span></div><span class="t">19:30 抵達</span></li>
+        </ol>
+        <p class="note">想在路邊迎接洋流號，請選車掃路線旁的安全地點等候，不要跟車。完整轉彎路線與「洋流雷達」即時位置，請看<a href="https://www.threads.com/@pumashen/post/DfmPEO1FH7q" target="_blank" rel="noopener">沈伯洋官方貼文</a>。</p>
+      </div>
+    </section>
+
     <section class="sec" aria-labelledby="h-route">
       <div class="sec-h"><h2 id="h-route">建議航線</h2><span class="en">ROUTE</span></div>
       <div class="card rec">
         <span class="badge">最推薦</span>
-        <div class="metro-head"><span class="mline">R25</span><h3>捷運關渡站 1 號出口<br>步行約 15～20 分鐘</h3></div>
+        <div class="metro-head"><span class="mline">R25</span><h3>捷運關渡站 1 號出口<br>步行約 15 分鐘（約 950 公尺）</h3></div>
         <ol class="steps">
           <li>搭淡水信義線（紅線）到<b>關渡站</b>，從 <b>1 號出口</b>出站</li>
           <li>右轉，沿大度路三段 <b>296 巷、301 巷</b>往河邊走</li>
@@ -207,38 +250,38 @@ footer a{color:var(--orange)}
           <li class="end">沿<b>知行路</b>走到關渡宮，廟前河岸廣場就是終點</li>
         </ol>
       </div>
-      <div class="card">
-        <h3>不想走路？關渡站轉公車</h3>
-        <p>在關渡站轉搭以下公車，到「<b>關渡宮</b>」站下車：</p>
-        <div class="buses"><span class="bus">223</span><span class="bus">302</span><span class="bus">小23</span></div>
-        <p class="note">散場前後公車可能塞住，等不到車就直接走回捷運站比較快。</p>
+      <div class="card shuttle">
+        <h3>接駁服務：捷運關渡站 1 號出口</h3>
+        <p>有接駁車往返捷運站與活動會場。</p>
+        <p class="note"><b>請禮讓行動較不便的朋友及帶小朋友的家庭優先搭乘。</b></p>
       </div>
     </section>
 
     <section class="sec" aria-labelledby="h-bus">
       <div class="sec-h"><h2 id="h-bus">公車</h2><span class="en">BUS</span></div>
       <div class="card">
-        <h3>直達「關渡宮」站</h3>
-        <div class="buses"><span class="bus">133</span><span class="bus">216副</span><span class="bus">223</span><span class="bus">302</span><span class="bus">550</span><span class="bus r">紅35</span><span class="bus">小23</span></div>
+        <h3>搭到「關渡宮」站下車</h3>
+        <div class="buses"><span class="bus">223</span><span class="bus">302</span><span class="bus">302區</span><span class="bus">550</span><span class="bus r">紅35</span><span class="bus">小23</span></div>
         <a class="link" href="https://pda5284.gov.taipei/MQS/stoplocation.jsp?slid=547" target="_blank" rel="noopener">查關渡宮站即時到站 ↗</a>
       </div>
       <div class="card">
-        <h3>到「關渡站」再走過去</h3>
-        <div class="buses"><span class="bus">223</span><span class="bus">302</span><span class="bus">838</span><span class="bus r">紅22</span><span class="bus r">紅55</span></div>
-        <p class="note">下車後過大度路，沿知行路步行約 10 分鐘。</p>
+        <h3>搭到「關渡碼頭」站下車</h3>
+        <div class="buses"><span class="bus r">紅35</span><span class="bus">小23</span></div>
+        <p class="note">管制期間公車照常通行，但散場時可能較擠，等不到車可直接步行回捷運關渡站。</p>
       </div>
     </section>
 
     <section class="sec" aria-labelledby="h-park">
-      <div class="sec-h"><h2 id="h-park">停泊區</h2><span class="en">PARKING</span></div>
-      <div class="alert"><b>當天車位一定不夠。</b>附近停車場都不大，車掃結束後周邊也可能交通管制。能搭捷運就搭捷運，開車或騎車建議停在關渡站一帶再走過來。</div>
+      <div class="sec-h"><h2 id="h-park">交通管制・停車</h2><span class="en">ROAD CLOSED</span></div>
+      <div class="closure">
+        <span class="when">11/15　12:00–24:00</span>
+        <span class="where">中央北路－聖景路－知行路<br>（知行路至關渡宮圓環前）</span>
+        <p>管制期間<b style="color:var(--orange)">僅開放公共運輸車輛通行</b>，汽機車都不能開進去。</p>
+      </div>
       <div class="card">
-        <div class="lots">
-          <div class="lot"><span class="P">P</span><div><b>關渡水岸自然公園平面停車場</b><span>24 小時計時收費</span></div><span class="dist">185 m</span></div>
-          <div class="lot"><span class="P">P</span><div><b>嘟嘟房關渡宮站</b><span>知行路 173-183 號・約 39 格・24 小時</span></div><span class="dist">235 m</span></div>
-          <div class="lot"><span class="P">P</span><div><b>關渡醫院旁平面停車場</b><span>平面停車場</span></div><span class="dist">344 m</span></div>
-        </div>
-        <p class="note">距離為與關渡宮的直線距離。收費與剩餘車位以現場為準。</p>
+        <h3>開車、騎車的小水滴</h3>
+        <p>關渡宮周邊的停車場都在管制範圍內，當天進不去。建議把車停在<b>自家附近的捷運站</b>，搭淡水信義線到關渡站再走過來。</p>
+        <p class="note">要在關渡一帶找車位，請選管制路段以外的停車場。</p>
       </div>
       <div class="btns">
         <a class="btn p" id="park-car" target="_blank" rel="noopener">找汽車停車場<small>開 Google 地圖</small></a>
@@ -249,10 +292,12 @@ footer a{color:var(--orange)}
     <section class="sec" aria-labelledby="h-rule">
       <div class="sec-h"><h2 id="h-rule">小水滴提醒</h2><span class="en">DROPLET NOTES</span></div>
       <ul class="rules">
-        <li><span class="n">01</span><b>定點等車隊，不跟車</b><span>前幾場騎車跟車有安全疑慮，競總也呼籲過。</span></li>
-        <li><span class="n">02</span><b>走水路請自費搭船</b><span>注意船上安全，不要免費招待他人搭船。</span></li>
-        <li><span class="n">03</span><b>散場錯開時間</b><span>關渡站會很擠，先在附近吃點東西再走。</span></li>
-        <li><span class="n">04</span><b>垃圾帶走、音量放低</b><span>關渡宮是信仰場所，也尊重周邊住戶。</span></li>
+        <li><span class="n">01</span><b>不跟車，沿線迎接</b><span>在路線旁選安全地點等洋流號，聽從員警、義交與工作人員引導。</span></li>
+        <li><span class="n">02</span><b>不放鞭炮</b><span>一起維護現場民眾與車隊的安全。</span></li>
+        <li><span class="n">03</span><b>聚焦市政、歡樂選舉</b><span>遇到不同意見的朋友，請保持民主風度。</span></li>
+        <li><span class="n">04</span><b>走水路請自費搭船</b><span>注意船上安全，不要免費招待他人搭船。</span></li>
+        <li><span class="n">05</span><b>散場錯開時間</b><span>22:00 結束後關渡站會很擠，可以稍等再走。</span></li>
+        <li><span class="n">06</span><b>垃圾帶走、音量放低</b><span>關渡宮是信仰場所，也尊重周邊住戶。</span></li>
       </ul>
     </section>
 
@@ -261,7 +306,7 @@ footer a{color:var(--orange)}
 
 <footer class="gut">
   <div class="col">
-    <p><b>支持者自製的便利頁，不是沈伯洋競選總部官方頁面。</b>路線、集合點與交通管制請以<a href="https://puma.taipei/taipei-current" target="_blank" rel="noopener">官網台北大洋流頁面</a>為準。交通資訊整理自關渡宮官網、台灣觀光資訊網與台北市公車動態系統。</p>
+    <p><b>支持者自製的便利頁，不是沈伯洋競選總部官方頁面。</b>路線、集合點與交通管制請以<a href="https://puma.taipei/taipei-current" target="_blank" rel="noopener">官網台北大洋流頁面</a>為準。時間、路線、交通管制與接駁資訊整理自<a href="https://www.threads.com/@pumashen/post/DfmPEO1FH7q" target="_blank" rel="noopener">沈伯洋官方公告</a>，實際情況以現場為準。</p>
   </div>
 </footer>
 
@@ -277,7 +322,7 @@ const appDir = (o, mode) => "https://www.google.com/maps/dir/?api=1" + (o ? "&or
 
 const CATS = [
   { label:"終點",       embed:`place?q=${enc(PLACE)}&zoom=16`, app:appSearch(PLACE), hint:"終點：關渡宮前河岸廣場" },
-  { label:"捷運步行路線", embed:`directions?origin=${enc("捷運關渡站")}&destination=${enc(PLACE)}&mode=walking`, app:appDir("捷運關渡站","walking"), hint:"關渡站 1 號出口，步行約 15～20 分鐘" },
+  { label:"捷運步行路線", embed:`directions?origin=${enc("捷運關渡站")}&destination=${enc(PLACE)}&mode=walking`, app:appDir("捷運關渡站","walking"), hint:"關渡站 1 號出口，步行約 15 分鐘（約 950 公尺）" },
   { label:"便利商店",    q:"便利商店" },
   { label:"汽車停車場",  q:"停車場" },
   { label:"機車停車",    q:"機車停車場" },
@@ -311,8 +356,8 @@ pick(0);
 
 document.getElementById("nav-transit").href = appDir("", "transit");
 document.getElementById("nav-walk").href = appDir("捷運關渡站", "walking");
-document.getElementById("park-car").href = appSearch("停車場 near 關渡宮");
-document.getElementById("park-moto").href = appSearch("機車停車場 near 關渡宮");
+document.getElementById("park-car").href = appSearch("停車場 near 捷運關渡站");
+document.getElementById("park-moto").href = appSearch("機車停車場 near 捷運關渡站");
 </script>
 </body>
 </html>
